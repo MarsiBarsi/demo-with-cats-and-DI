@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './cats-list.component.html',
   styleUrls: ['./cats-list.component.less']
 })
-export class CatsListComponent implements OnInit {
+export class CatsListComponent {
   cats = [
     'http://shing.mobile9.com/download/media/616/cat_DQhCmyXq.jpg',
     'https://avatars2.githubusercontent.com/u/2476143?s=400&v=4',
@@ -14,6 +14,4 @@ export class CatsListComponent implements OnInit {
   ];
 
   constructor() {}
-
-  ngOnInit() {}
 }
