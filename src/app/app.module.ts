@@ -12,10 +12,14 @@ import { ARE_THERE_CATS } from './tokens/areThereCats';
 @NgModule({
   declarations: [AppComponent, CatsCardsComponent, CatsListComponent],
   imports: [BrowserModule, AppRoutingModule],
-  providers: [CatsImagesService, {
-    provide: MY_TOKEN,
-    useValue: 'Хоба, токен с уровня модуля'
-  }],
+  providers: [
+    // не пишем здесь объект с provide, так как класс — самая популярная форма записи, ангуляр её понимает самостоятельно
+    CatsImagesService,
+    {
+      provide: MY_TOKEN,
+      useValue: 'Хоба, токен с уровня модуля'
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

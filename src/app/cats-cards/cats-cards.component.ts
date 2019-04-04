@@ -21,8 +21,9 @@ import { IWithTitle } from '../interfaces/withTitles';
 })
 export class CatsCardsComponent {
   constructor(
-    private readonly catsImagesService: CatsImagesService,
-    @Optional() @Inject(MY_TOKEN) myToken: string | null,
+    // не пишем здесь Inject(), так как класс — самая популярная форма записи, ангуляр её понимает самостоятельно
+    private readonly catsImagesService: CatsImagesService, // private добавляет сервис как поле класса
+    @Optional() @Inject(MY_TOKEN) myToken: string | null, // добавили к типу null, так как используем Optional()
     @Inject(ARE_THERE_CATS) areThereCats: boolean
   ) {
     console.log('Коты то здесь? —', areThereCats);
@@ -41,6 +42,6 @@ export class CatsCardsComponent {
   }
 
   get cats(): ReadonlyArray<string> {
-    return this.catsImagesService.catsImages;
+    return this.catsImagesService.catsImages; // обращаемся к сервису
   }
 }
