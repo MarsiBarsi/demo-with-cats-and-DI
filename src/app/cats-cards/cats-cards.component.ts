@@ -1,17 +1,46 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, Self, Optional } from '@angular/core';
+import { CatsImagesService } from '../services/cats-images.service';
+import { MY_TOKEN } from '../tokens/myToken';
+import { ARE_THERE_CATS } from '../tokens/areThereCats';
+import { WITH_TITLE_TOKEN } from '../tokens/withTitle';
+import { IWithTitle } from '../interfaces/withTitles';
 
 @Component({
   selector: 'app-cats-cards',
   templateUrl: './cats-cards.component.html',
-  styleUrls: ['./cats-cards.component.less']
+  styleUrls: ['./cats-cards.component.less'],
+  providers: [
+    {
+      provide: ARE_THERE_CATS,
+      deps: [MY_TOKEN], // найдем MY_TOKEN выше и передадим в функцию
+      useFactory: function(myToken: string) {
+        return myToken.includes('коты');
+      }
+    }
+  ]
 })
 export class CatsCardsComponent {
-  cats = [
-    'http://shing.mobile9.com/download/media/616/cat_DQhCmyXq.jpg',
-    'https://avatars2.githubusercontent.com/u/2476143?s=400&v=4',
-    'https://s.tcdn.co/a5a/fe4/a5afe471-fd42-39af-9412-f4a690f0179c/17.png',
-    'https://pp.userapi.com/c846521/v846521335/4946e/JxF87yKA6h4.jpg?ava=1'
-  ];
+  constructor(
+    private readonly catsImagesService: CatsImagesService,
+    @Optional() @Inject(MY_TOKEN) myToken: string | null,
+    @Inject(ARE_THERE_CATS) areThereCats: boolean
+  ) {
+    console.log('Коты то здесь? —', areThereCats);
 
-  constructor() {}
+    if (myToken === null) {
+      console.error('Никто и не передовал!');
+
+      return;
+    }
+
+    console.log(myToken);
+  }
+
+  get title(): string {
+    return 'название';
+  }
+
+  get cats(): ReadonlyArray<string> {
+    return this.catsImagesService.catsImages;
+  }
 }
